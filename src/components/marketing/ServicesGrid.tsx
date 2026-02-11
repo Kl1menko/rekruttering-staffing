@@ -7,7 +7,6 @@ import { ChevronLeft, ChevronRight, Files, Hand, MoreHorizontal, ThumbsUp } from
 
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
-import { Stagger, StaggerItem } from "@/components/motion/Stagger";
 import { Button } from "@/components/ui/button";
 import { services } from "@/content/services";
 import { cn } from "@/lib/utils";
@@ -22,10 +21,10 @@ function ServiceVisual({ variant }: { variant: number }) {
         <div className="relative mx-auto w-[86%] overflow-hidden rounded-[1.25rem] border-[2px] border-[#e9fff3]/90 bg-gradient-to-b from-[#33a49f] via-[#127f79] to-[#0b736c] text-[#fdfbee] shadow-[0_20px_38px_-24px_rgba(0,0,0,0.66)] sm:w-[85%] sm:rounded-[1.45rem] sm:border-[2.5px] md:w-[84%] md:rounded-[1.7rem] md:border-[3px]">
           <div className="px-4 pb-3 pt-3 sm:px-4 sm:pb-4 sm:pt-3.5 md:px-5 md:pb-4 md:pt-4">
             <p className="text-[0.78rem] font-medium leading-none text-[#92de4f] sm:text-[0.86rem] md:text-[0.94rem]">
-              Microsoft
+              Primework Ops
             </p>
             <p className="mt-1.5 text-[1.35rem] font-semibold leading-[0.94] sm:text-[1.7rem] md:mt-2 md:text-[2.2rem]">
-              Senior Product Manager
+              Warehouse Picker Team
             </p>
 
             <div className="mt-3.5 space-y-2 sm:mt-4 md:mt-5 md:space-y-2.5">
@@ -37,20 +36,20 @@ function ServiceVisual({ variant }: { variant: number }) {
 
             <div className="mt-3.5 flex gap-1.5 sm:mt-4 sm:gap-2 md:mt-5 md:gap-2.5">
               <span className="rounded-full bg-[#2f9c64]/46 px-2 py-1 text-[0.63rem] font-medium text-[#d6ffbc] sm:px-2.5 sm:text-[0.67rem] md:px-3 md:text-xs">
-                • Full-Time
+                • Shift-Based
               </span>
               <span className="rounded-full bg-white/20 px-2 py-1 text-[0.63rem] font-medium text-[#e6fbf3] sm:px-2.5 sm:text-[0.67rem] md:px-3 md:text-xs">
-                • Senior Level
+                • Compliance Ready
               </span>
             </div>
           </div>
 
           <div className="bg-[#fbfaf4] px-4 py-2.5 text-[#110000] sm:px-4 sm:py-3 md:px-5 md:py-3.5">
             <p className="text-[1.25rem] font-semibold leading-none sm:text-[1.5rem] md:text-[2rem]">
-              $8,000/Month
+              Ramp-up: 38 starts / 10 days
             </p>
             <p className="mt-1 text-[0.73rem] text-[#626262] sm:text-xs md:text-sm">
-              San Francisco, United States
+              Warsaw Region, Poland
             </p>
           </div>
         </div>
@@ -71,7 +70,7 @@ function ServiceVisual({ variant }: { variant: number }) {
           <div className="h-14 rounded-xl border border-[#bdddae] bg-[#d7f3ca] sm:h-16 sm:rounded-2xl md:h-20" />
           <div className="h-12 rounded-xl border border-[#bdddae] bg-[#d7f3ca] sm:h-14 sm:rounded-2xl md:h-16" />
         </div>
-        <div className="absolute left-[8%] top-[43%] w-[74%] -rotate-[5deg] rounded-xl border border-black/10 bg-white px-2.5 py-2.5 shadow-[0_16px_30px_-22px_rgba(0,0,0,0.42)] sm:left-[10%] sm:top-[44%] sm:w-[70%] sm:rounded-2xl sm:px-3 sm:py-3 md:left-[12%] md:w-[66%] md:-rotate-[6deg] md:px-3.5">
+        <div className="absolute left-1/2 top-1/2 w-[74%] -translate-x-1/2 -translate-y-[58%] -rotate-[5deg] rounded-xl border border-black/10 bg-white px-2.5 py-2.5 shadow-[0_16px_30px_-22px_rgba(0,0,0,0.42)] sm:w-[70%] sm:rounded-2xl sm:px-3 sm:py-3 md:w-[66%] md:-rotate-[6deg] md:px-3.5">
           <div className="flex items-center gap-2 sm:gap-2.5">
             <Image
               src="/avatars/anna.jpg"
@@ -82,29 +81,29 @@ function ServiceVisual({ variant }: { variant: number }) {
             />
             <div className="min-w-0">
               <p className="truncate text-[0.8rem] font-semibold leading-none text-foreground sm:text-[0.92rem] md:text-[1rem]">
-                Maria Angelica M
+                Anna Kowalska
               </p>
               <p className="mt-1 truncate text-[0.65rem] text-foreground/52 sm:text-[0.7rem] md:text-xs">
-                2+ Exp | Product Designer
+                3+ yrs | Logistics Recruiter
               </p>
             </div>
             <MoreHorizontal className="ml-auto size-3.5 text-foreground/74 sm:size-4" />
           </div>
           <div className="mt-2.5 flex items-center gap-2 text-[0.65rem] text-foreground/74 sm:mt-3 sm:gap-2.5 sm:text-[0.7rem] md:text-xs">
-            <span className="inline-flex items-center gap-1">
-              <Files className="size-3 sm:size-3.5" />
-              9 File
-            </span>
-            <span className="inline-flex items-center gap-1 rounded-md bg-[#e2f9ef] px-1.5 py-1 text-[#0e7e65] sm:gap-1.5 sm:px-2">
-              <ThumbsUp className="size-3 sm:size-3.5" />
-              78%
-            </span>
+              <span className="inline-flex items-center gap-1">
+                <Files className="size-3 sm:size-3.5" />
+                12 docs
+              </span>
+              <span className="inline-flex items-center gap-1 rounded-md bg-[#e2f9ef] px-1.5 py-1 text-[#0e7e65] sm:gap-1.5 sm:px-2">
+                <ThumbsUp className="size-3 sm:size-3.5" />
+                92%
+              </span>
             <span className="ml-auto inline-flex items-center justify-center rounded-md border border-black/15 p-1">
               <Hand className="size-3 text-foreground/82 sm:size-3.5" />
             </span>
           </div>
         </div>
-        <div className="absolute left-[6%] top-[71%] w-[60%] rounded-xl border border-black/10 bg-white/90 px-2.5 py-2 opacity-96 shadow-[0_14px_30px_-24px_rgba(0,0,0,0.5)] sm:left-[8%] sm:top-[69%] sm:w-[56%] sm:rounded-2xl sm:px-3 sm:py-2.5">
+        <div className="absolute left-1/2 top-1/2 w-[60%] -translate-x-[58%] translate-y-[34%] rounded-xl border border-black/10 bg-white/90 px-2.5 py-2 opacity-96 shadow-[0_14px_30px_-24px_rgba(0,0,0,0.5)] sm:w-[56%] sm:rounded-2xl sm:px-3 sm:py-2.5">
           <div className="flex items-center gap-2">
             <Image
               src="/avatars/marcus.jpg"
@@ -182,7 +181,7 @@ function ServiceVisual({ variant }: { variant: number }) {
       <div className="absolute left-4 top-[42%] z-[2] max-w-[86%] rounded-[1rem] bg-[#046e68] px-3 py-2.5 text-[0.86rem] leading-[1.22] text-[#e9fff3] shadow-[0_18px_30px_-20px_rgba(0,0,0,0.62)] sm:left-5 sm:top-[43%] sm:max-w-[80%] sm:rounded-[1.1rem] sm:px-3.5 sm:py-3 sm:text-[0.92rem] md:left-6 md:top-[44%] md:max-w-[76%] md:rounded-[1.2rem] md:px-4 md:py-3.5 md:text-[0.98rem] md:leading-[1.26]">
         <p className="font-medium">Congrats!! you have been accepted to the next stage</p>
         <p className="mt-1 text-right text-[0.95rem] leading-none text-[#b2f070] sm:mt-1.5 sm:text-[1rem] md:text-[1.05rem]">
-          13:00 ✓✓
+          Start confirmed ✓✓
         </p>
         <span className="absolute -bottom-1.5 right-5 h-2.5 w-2.5 rotate-45 bg-[#046e68] sm:-bottom-2 sm:right-6 sm:h-3 sm:w-3" />
       </div>
@@ -193,6 +192,8 @@ function ServiceVisual({ variant }: { variant: number }) {
 export function ServicesGrid() {
   const sliderRef = useRef<HTMLDivElement>(null);
   const pausedRef = useRef(false);
+  const loopBaseWidthRef = useRef(0);
+  const isNormalizingRef = useRef(false);
 
   const getSlideOffset = (slider: HTMLDivElement) => {
     const slide = slider.querySelector<HTMLElement>("[data-slide]");
@@ -214,6 +215,38 @@ export function ServicesGrid() {
     slider.scrollBy({ left: delta, behavior: "smooth" });
   };
 
+  const normalizeLoopPosition = (slider: HTMLDivElement) => {
+    if (isNormalizingRef.current) return;
+    const baseWidth = loopBaseWidthRef.current;
+    if (!baseWidth) return;
+
+    if (slider.scrollLeft >= baseWidth) {
+      isNormalizingRef.current = true;
+      slider.scrollLeft -= baseWidth;
+      isNormalizingRef.current = false;
+      return;
+    }
+
+    if (slider.scrollLeft < 0) {
+      isNormalizingRef.current = true;
+      slider.scrollLeft += baseWidth;
+      isNormalizingRef.current = false;
+    }
+  };
+
+  useEffect(() => {
+    const slider = sliderRef.current;
+    if (!slider) return;
+
+    const recalc = () => {
+      loopBaseWidthRef.current = slider.scrollWidth / 2;
+    };
+
+    recalc();
+    window.addEventListener("resize", recalc);
+    return () => window.removeEventListener("resize", recalc);
+  }, []);
+
   useEffect(() => {
     const timer = window.setInterval(() => {
       const slider = sliderRef.current;
@@ -222,18 +255,18 @@ export function ServicesGrid() {
       const amount = getSlideOffset(slider);
       if (!amount) return;
 
-      const maxScroll = slider.scrollWidth - slider.clientWidth;
-      const nextLeft = slider.scrollLeft + amount;
-      if (nextLeft >= maxScroll - 4) {
-        slider.scrollTo({ left: 0, behavior: "smooth" });
-        return;
-      }
-
       slider.scrollBy({ left: amount, behavior: "smooth" });
-    }, 2000);
+      window.setTimeout(() => {
+        const current = sliderRef.current;
+        if (!current) return;
+        normalizeLoopPosition(current);
+      }, 420);
+    }, 4000);
 
     return () => window.clearInterval(timer);
   }, []);
+
+  const sliderItems = [...services, ...services];
 
   return (
     <Section id="services" className="border-t border-border/60">
@@ -273,6 +306,9 @@ export function ServicesGrid() {
         <div
           ref={sliderRef}
           className="mt-7 overflow-x-auto pb-2 [-ms-overflow-style:none] [scrollbar-width:none] sm:mt-8 md:mt-10 [&::-webkit-scrollbar]:hidden"
+          onScroll={(event) => {
+            normalizeLoopPosition(event.currentTarget);
+          }}
           onMouseEnter={() => {
             pausedRef.current = true;
           }}
@@ -286,13 +322,13 @@ export function ServicesGrid() {
             pausedRef.current = false;
           }}
         >
-          <Stagger className="flex snap-x snap-mandatory gap-5">
-            {services.map((service, index) => {
+          <div className="flex snap-x snap-mandatory gap-5">
+            {sliderItems.map((service, index) => {
               const variant = index % 3;
               const dark = variant === 0;
               return (
-                <StaggerItem
-                  key={service.slug}
+                <div
+                  key={`${service.slug}-${index}`}
                   data-slide
                   className="w-[92%] shrink-0 snap-start sm:w-[88%] md:w-[calc((100%-1.25rem)/2)]"
                 >
@@ -342,10 +378,10 @@ export function ServicesGrid() {
                       <ServiceVisual variant={variant} />
                     </article>
                   </Link>
-                </StaggerItem>
+                </div>
               );
             })}
-          </Stagger>
+          </div>
         </div>
         <div className="mt-5 flex items-center justify-center gap-2 md:hidden">
           <Button
