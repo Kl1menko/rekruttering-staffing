@@ -1,4 +1,3 @@
-# Primework Clone
 
 Landing website for a B2B recruitment/staffing company.
 Built with Next.js App Router and focused on lead generation, trust, and compliance messaging.

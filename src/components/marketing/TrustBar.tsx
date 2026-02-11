@@ -1,8 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import type { LucideIcon } from "lucide-react";
-import { Award, Building2, Globe2, Users } from "lucide-react";
 import { useInView, useReducedMotion } from "framer-motion";
 
 import { Container } from "@/components/layout/Container";
@@ -14,28 +12,24 @@ const trustItems = [
     value: 1200,
     suffix: "+",
     detail: "Monthly operational coverage",
-    icon: Users,
   },
   {
     label: "Coverage regions",
     value: 17,
     suffix: "",
     detail: "Poland and Central Europe",
-    icon: Globe2,
   },
   {
     label: "Verified partners",
     value: 90,
     suffix: "+",
     detail: "Logistics, manufacturing, retail",
-    icon: Building2,
   },
   {
     label: "Documents and licenses",
     value: 100,
     suffix: "%",
     detail: "Audit-ready compliance package",
-    icon: Award,
   },
 ];
 
@@ -44,7 +38,6 @@ type TrustItem = {
   value: number;
   suffix: string;
   detail: string;
-  icon: LucideIcon;
 };
 
 function CountUp({ end, suffix, start }: { end: number; suffix: string; start: boolean }) {
@@ -86,7 +79,7 @@ function TrustCard({ item }: { item: TrustItem }) {
   return (
     <article
       ref={cardRef}
-      className="group relative min-h-56 overflow-hidden rounded-3xl border border-black/12 bg-[color:color-mix(in_srgb,var(--off-white)_86%,var(--sand)_14%)] px-7 py-7 shadow-[0_8px_22px_-18px_rgba(0,0,0,0.45)] md:min-h-64 md:px-8 md:py-8"
+      className="group relative flex min-h-56 flex-col justify-center overflow-hidden rounded-3xl border border-black/12 bg-[color:color-mix(in_srgb,var(--off-white)_86%,var(--sand)_14%)] px-7 py-7 shadow-[0_8px_22px_-18px_rgba(0,0,0,0.45)] md:min-h-64 md:px-8 md:py-8"
     >
       <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_62%,rgba(198,235,141,0.22)_0%,transparent_70%)] opacity-70" />
 
@@ -95,9 +88,7 @@ function TrustCard({ item }: { item: TrustItem }) {
       <span className="pointer-events-none absolute bottom-4 left-4 h-8 w-8 border-b-2 border-l-2 border-[#95d46a]/85" />
       <span className="pointer-events-none absolute bottom-4 right-4 h-8 w-8 border-b-2 border-r-2 border-[#95d46a]/85" />
 
-      <item.icon className="relative z-10 size-5 text-foreground/78" />
-
-      <p className="relative z-10 mt-8 text-[2.15rem] font-semibold leading-none text-foreground md:text-[2.55rem]">
+      <p className="relative z-10 mt-4 text-[2.15rem] font-semibold leading-none text-foreground md:text-[2.55rem]">
         <CountUp end={item.value} suffix={item.suffix} start={isInView} />{" "}
         <span className="text-[2.05rem] font-medium text-foreground/32 md:text-[2.35rem]">
           {item.label}

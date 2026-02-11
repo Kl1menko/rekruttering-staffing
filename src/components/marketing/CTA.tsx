@@ -1,8 +1,9 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { getCountries, getCountryCallingCode, isValidPhoneNumber } from "libphonenumber-js/min";
+import { useState } from "react";
+import { isValidPhoneNumber } from "libphonenumber-js/min";
 import { Mail, Phone, ShieldCheck } from "lucide-react";
+import { toast } from "sonner";
 
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
@@ -29,54 +30,60 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { cn } from "@/lib/utils";
 
-type CountryCode = (typeof COUNTRY_CODES)[number];
-
 type FormValues = {
   contactName: string;
   company: string;
+  industry: string;
+  serviceModel: string;
+  headcount: string;
+  startUrgency: string;
   contactEmail: string;
   contactPhone: string;
   request: string;
+  privacyAccepted: boolean;
 };
 
 type FormErrors = Partial<Record<keyof FormValues, string>>;
+type StringFormField = Exclude<keyof FormValues, "privacyAccepted">;
 
-const COUNTRY_CODES = getCountries();
+const INDUSTRY_OPTIONS = [
+  "Logistics and Warehousing",
+  "Manufacturing",
+  "Food Processing",
+  "Retail and Distribution",
+  "Hospitality",
+  "Construction Support",
+];
+const SERVICE_MODEL_OPTIONS = [
+  { value: "temporary", label: "Temporary staffing" },
+  { value: "permanent", label: "Permanent recruitment" },
+  { value: "payroll", label: "Payroll and compliance" },
+];
+const START_URGENCY_OPTIONS = [
+  { value: "asap", label: "ASAP (0-3 days)" },
+  { value: "week", label: "Within 7 days" },
+  { value: "two-weeks", label: "Within 14 days" },
+  { value: "month", label: "Within 30 days" },
+  { value: "flexible", label: "Flexible timeline" },
+];
 
 export function CTA() {
-  const [countryCode, setCountryCode] = useState<CountryCode>("PL");
   const [values, setValues] = useState<FormValues>({
     contactName: "",
     company: "",
+    industry: "",
+    serviceModel: "",
+    headcount: "",
+    startUrgency: "",
     contactEmail: "",
     contactPhone: "",
     request: "",
+    privacyAccepted: false,
   });
   const [errors, setErrors] = useState<FormErrors>({});
   const [isSuccessOpen, setIsSuccessOpen] = useState(false);
 
-  const countryName = useMemo(() => new Intl.DisplayNames(["en"], { type: "region" }), []);
-
-  const countries = useMemo(
-    () =>
-      COUNTRY_CODES.map((code) => ({
-        code,
-        label: countryName.of(code) ?? code,
-        dialCode: `+${getCountryCallingCode(code)}`,
-      })).sort((a, b) => a.label.localeCompare(b.label)),
-    [countryName]
-  );
-
-  const selectedCountry = useMemo(() => {
-    return countries.find((country) => country.code === countryCode) ?? countries[0];
-  }, [countries, countryCode]);
-
-  const fullPhoneNumber = useMemo(() => {
-    const localDigits = values.contactPhone.replace(/\D/g, "");
-    return `${selectedCountry.dialCode}${localDigits}`;
-  }, [selectedCountry.dialCode, values.contactPhone]);
-
-  const validateField = (name: keyof FormValues, value: string) => {
+  const validateField = (name: StringFormField, value: string) => {
     const trimmed = value.trim();
 
     if (!trimmed) {
@@ -89,16 +96,25 @@ export function CTA() {
       if (!/^[a-zA-Z\s'`-]+$/.test(trimmed)) return "Use letters only.";
     }
 
+    if (name === "headcount") {
+      const count = Number.parseInt(trimmed, 10);
+      if (Number.isNaN(count) || count <= 0) return "Enter a valid headcount.";
+      if (count > 10000) return "Headcount is too large.";
+    }
+
     if (name === "contactEmail") {
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) return "Enter a valid email.";
     }
 
     if (name === "contactPhone") {
+      if (!trimmed.startsWith("+")) {
+        return "Use international format, e.g. +48 501 234 567.";
+      }
       const digits = trimmed.replace(/\D/g, "");
-      if (digits.length < 6 || digits.length > 14) {
+      if (digits.length < 7 || digits.length > 15) {
         return "Enter a valid phone number.";
       }
-      if (!isValidPhoneNumber(`${selectedCountry.dialCode}${digits}`)) {
+      if (!isValidPhoneNumber(trimmed)) {
         return "Enter a valid phone number.";
       }
     }
@@ -107,22 +123,19 @@ export function CTA() {
   };
 
   const onChange =
-    (field: keyof FormValues) =>
+    (field: StringFormField) =>
     (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-      let next = event.target.value;
-      if (field === "contactPhone") {
-        const countryDigits = selectedCountry.dialCode.replace(/\D/g, "");
-        const onlyDigits = next.replace(/\D/g, "");
-        const withoutCountry = onlyDigits.startsWith(countryDigits)
-          ? onlyDigits.slice(countryDigits.length)
-          : onlyDigits;
-        next = withoutCountry.slice(0, 14);
-      }
+      const next = event.target.value;
       setValues((prev) => ({ ...prev, [field]: next }));
       setErrors((prev) => ({ ...prev, [field]: "" }));
     };
 
-  const onBlur = (field: keyof FormValues) => () => {
+  const onSelectChange = (field: StringFormField, value: string) => {
+    setValues((prev) => ({ ...prev, [field]: value }));
+    setErrors((prev) => ({ ...prev, [field]: "" }));
+  };
+
+  const onBlur = (field: StringFormField) => () => {
     const message = validateField(field, values[field]);
     setErrors((prev) => ({ ...prev, [field]: message }));
   };
@@ -133,9 +146,14 @@ export function CTA() {
     const nextErrors: FormErrors = {
       contactName: validateField("contactName", values.contactName),
       company: validateField("company", values.company),
+      industry: validateField("industry", values.industry),
+      serviceModel: validateField("serviceModel", values.serviceModel),
+      headcount: validateField("headcount", values.headcount),
+      startUrgency: validateField("startUrgency", values.startUrgency),
       contactEmail: validateField("contactEmail", values.contactEmail),
       contactPhone: validateField("contactPhone", values.contactPhone),
       request: validateField("request", values.request),
+      privacyAccepted: values.privacyAccepted ? "" : "Please accept the privacy notice.",
     };
 
     setErrors(nextErrors);
@@ -146,6 +164,9 @@ export function CTA() {
     }
 
     setIsSuccessOpen(true);
+    toast.success("Request submitted successfully", {
+      description: "Thank you. Our managers will contact you shortly.",
+    });
   };
 
   return (
@@ -200,53 +221,135 @@ export function CTA() {
                   />
                   {errors.company ? <p className="text-xs text-[#920000]">{errors.company}</p> : null}
                 </div>
-                <div className="grid gap-2">
-                  <Label htmlFor="contact-phone">
-                    Phone <span className="text-[#b50000]">*</span>
-                  </Label>
-                  <div
-                    className={cn(
-                      "flex h-11 items-center rounded-xl border bg-[color:color-mix(in_srgb,var(--off-white)_75%,white_25%)] transition-shadow",
-                      errors.contactPhone
-                        ? "border-[#b50000] ring-[3px] ring-[#b50000]/20"
-                        : "border-black/12 focus-within:border-ring focus-within:ring-ring/50 focus-within:ring-[3px]"
-                    )}
-                  >
-                    <Select
-                      value={countryCode}
-                      onValueChange={(value) => setCountryCode(value as CountryCode)}
-                    >
-                      <SelectTrigger className="h-11 w-[8.5rem] rounded-none border-0 bg-transparent px-2.5 text-xs shadow-none focus:ring-0 focus-visible:ring-0 sm:w-[10.75rem] sm:px-3 sm:text-sm md:w-[12.75rem]">
-                        <SelectValue placeholder="Country code" />
+                <div className="grid gap-2 sm:grid-cols-2 sm:gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="industry">
+                      Industry <span className="text-[#b50000]">*</span>
+                    </Label>
+                    <Select value={values.industry} onValueChange={(value) => onSelectChange("industry", value)}>
+                      <SelectTrigger
+                        id="industry"
+                        className={cn(
+                          "h-11 w-full rounded-xl border-black/12 bg-[color:color-mix(in_srgb,var(--off-white)_75%,white_25%)]",
+                          errors.industry ? "border-[#b50000] ring-[3px] ring-[#b50000]/20" : ""
+                        )}
+                      >
+                        <SelectValue placeholder="Select industry" />
                       </SelectTrigger>
-                      <SelectContent className="max-h-[19rem] rounded-xl border-black/12 bg-[color:color-mix(in_srgb,var(--off-white)_85%,white_15%)]">
-                        {countries.map((country) => (
-                          <SelectItem key={country.code} value={country.code}>
-                            {country.label} ({country.dialCode})
+                      <SelectContent className="max-h-[18rem] rounded-xl border-black/12 bg-[color:color-mix(in_srgb,var(--off-white)_85%,white_15%)]">
+                        {INDUSTRY_OPTIONS.map((option) => (
+                          <SelectItem key={option} value={option}>
+                            {option}
                           </SelectItem>
                         ))}
                       </SelectContent>
                     </Select>
-                    <span className="h-6 w-px bg-black/12" />
+                    {errors.industry ? <p className="text-xs text-[#920000]">{errors.industry}</p> : null}
+                  </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="service-model">
+                      Service model <span className="text-[#b50000]">*</span>
+                    </Label>
+                    <Select
+                      value={values.serviceModel}
+                      onValueChange={(value) => onSelectChange("serviceModel", value)}
+                    >
+                      <SelectTrigger
+                        id="service-model"
+                        className={cn(
+                          "h-11 w-full rounded-xl border-black/12 bg-[color:color-mix(in_srgb,var(--off-white)_75%,white_25%)]",
+                          errors.serviceModel ? "border-[#b50000] ring-[3px] ring-[#b50000]/20" : ""
+                        )}
+                      >
+                        <SelectValue placeholder="Select model" />
+                      </SelectTrigger>
+                      <SelectContent className="rounded-xl border-black/12 bg-[color:color-mix(in_srgb,var(--off-white)_85%,white_15%)]">
+                        {SERVICE_MODEL_OPTIONS.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {errors.serviceModel ? (
+                      <p className="text-xs text-[#920000]">{errors.serviceModel}</p>
+                    ) : null}
+                  </div>
+                </div>
+                <div className="grid gap-2 sm:grid-cols-2 sm:gap-4">
+                  <div className="grid gap-2">
+                    <Label htmlFor="headcount">
+                      Headcount <span className="text-[#b50000]">*</span>
+                    </Label>
                     <Input
-                      id="contact-phone"
-                      name="contactPhone"
-                      type="tel"
-                      inputMode="tel"
-                      placeholder="000 000 000"
-                      value={values.contactPhone}
-                      onChange={onChange("contactPhone")}
-                      onBlur={onBlur("contactPhone")}
-                      aria-invalid={Boolean(errors.contactPhone)}
+                      id="headcount"
+                      name="headcount"
+                      type="number"
+                      min={1}
+                      step={1}
+                      inputMode="numeric"
+                      placeholder="e.g. 25"
+                      value={values.headcount}
+                      onChange={onChange("headcount")}
+                      onBlur={onBlur("headcount")}
+                      aria-invalid={Boolean(errors.headcount)}
                       required
                       aria-required="true"
-                      className="h-11 min-w-0 border-0 bg-transparent text-sm shadow-none focus-visible:ring-0"
+                      className="h-11 rounded-xl border-black/12 bg-[color:color-mix(in_srgb,var(--off-white)_75%,white_25%)]"
                     />
+                    {errors.headcount ? <p className="text-xs text-[#920000]">{errors.headcount}</p> : null}
                   </div>
+                  <div className="grid gap-2">
+                    <Label htmlFor="start-urgency">
+                      Start date / urgency <span className="text-[#b50000]">*</span>
+                    </Label>
+                    <Select
+                      value={values.startUrgency}
+                      onValueChange={(value) => onSelectChange("startUrgency", value)}
+                    >
+                      <SelectTrigger
+                        id="start-urgency"
+                        className={cn(
+                          "h-11 w-full rounded-xl border-black/12 bg-[color:color-mix(in_srgb,var(--off-white)_75%,white_25%)]",
+                          errors.startUrgency ? "border-[#b50000] ring-[3px] ring-[#b50000]/20" : ""
+                        )}
+                      >
+                        <SelectValue placeholder="Select urgency" />
+                      </SelectTrigger>
+                      <SelectContent className="rounded-xl border-black/12 bg-[color:color-mix(in_srgb,var(--off-white)_85%,white_15%)]">
+                        {START_URGENCY_OPTIONS.map((option) => (
+                          <SelectItem key={option.value} value={option.value}>
+                            {option.label}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    {errors.startUrgency ? (
+                      <p className="text-xs text-[#920000]">{errors.startUrgency}</p>
+                    ) : null}
+                  </div>
+                </div>
+                <div className="grid gap-2">
+                  <Label htmlFor="contact-phone">
+                    Phone <span className="text-[#b50000]">*</span>
+                  </Label>
+                  <Input
+                    id="contact-phone"
+                    name="contactPhone"
+                    type="tel"
+                    inputMode="tel"
+                    placeholder="+48 501 234 567"
+                    value={values.contactPhone}
+                    onChange={onChange("contactPhone")}
+                    onBlur={onBlur("contactPhone")}
+                    aria-invalid={Boolean(errors.contactPhone)}
+                    required
+                    aria-required="true"
+                    className="h-11 rounded-xl border-black/12 bg-[color:color-mix(in_srgb,var(--off-white)_75%,white_25%)]"
+                  />
                   <p className="text-xs text-foreground/58">
-                    Enter digits only, without the country code. Example: 501234567
+                    Enter full phone number with country code, e.g. +48 501 234 567
                   </p>
-                  <input type="hidden" name="contactPhoneFull" value={fullPhoneNumber} />
                   {errors.contactPhone ? (
                     <p className="text-xs text-[#920000]">{errors.contactPhone}</p>
                   ) : null}
@@ -287,6 +390,28 @@ export function CTA() {
                   />
                   {errors.request ? <p className="text-xs text-[#920000]">{errors.request}</p> : null}
                 </div>
+                <div className="grid gap-2">
+                  <label className="flex items-start gap-2.5 text-sm text-foreground/72">
+                    <input
+                      type="checkbox"
+                      checked={values.privacyAccepted}
+                      onChange={(event) => {
+                        setValues((prev) => ({ ...prev, privacyAccepted: event.target.checked }));
+                        setErrors((prev) => ({ ...prev, privacyAccepted: "" }));
+                      }}
+                      className="mt-0.5 h-4 w-4 rounded border-black/25 accent-[#76df42]"
+                      aria-invalid={Boolean(errors.privacyAccepted)}
+                      required
+                    />
+                    <span>
+                      I agree to the processing of my data for contact purposes and accept the privacy
+                      notice. <span className="text-[#b50000]">*</span>
+                    </span>
+                  </label>
+                  {errors.privacyAccepted ? (
+                    <p className="text-xs text-[#920000]">{errors.privacyAccepted}</p>
+                  ) : null}
+                </div>
                 <Button
                   type="submit"
                   size="lg"
@@ -301,11 +426,21 @@ export function CTA() {
               <div className="mt-5 space-y-4 text-sm">
                 <p className="flex items-center gap-2">
                   <Mail className="icon-ui text-[#a5d56a]" />
-                  partnerships@primework.example
+                  <a
+                    href="mailto:partnerships@primework.example"
+                    className="transition-colors hover:text-foreground hover:underline hover:underline-offset-4"
+                  >
+                    partnerships@primework.example
+                  </a>
                 </p>
                 <p className="flex items-center gap-2">
                   <Phone className="icon-ui text-[#a5d56a]" />
-                  +48 22 100 20 30
+                  <a
+                    href="tel:+48221002030"
+                    className="transition-colors hover:text-foreground hover:underline hover:underline-offset-4"
+                  >
+                    +48 22 100 20 30
+                  </a>
                 </p>
                 <p className="flex items-center gap-2 text-muted-foreground">
                   <ShieldCheck className="icon-ui text-[#a5d56a]" />

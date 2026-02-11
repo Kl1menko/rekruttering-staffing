@@ -68,7 +68,7 @@ export function Header() {
         <div
           className={`overflow-hidden transition-all duration-300 ease-out ${
             isScrolled
-              ? "w-[186px] translate-x-0 opacity-100 md:w-0 md:-translate-x-2 md:opacity-0"
+              ? "w-0 -translate-x-2 opacity-0"
               : "w-[186px] translate-x-0 opacity-100"
           }`}
         >
@@ -94,8 +94,8 @@ export function Header() {
                 About
               </Link>
               <Link
-                href="/services"
-                className="whitespace-nowrap transition-colors hover:text-[var(--off-white)]"
+                href="/why-primework"
+                className="rounded-full border border-white/28 bg-[linear-gradient(180deg,rgba(255,255,255,0.24),rgba(255,255,255,0.08))] px-3 py-1 whitespace-nowrap text-[var(--off-white)] shadow-[inset_0_1px_0_rgba(255,255,255,0.38),0_6px_18px_-12px_rgba(0,0,0,0.55)] backdrop-blur-md transition-colors hover:bg-[linear-gradient(180deg,rgba(255,255,255,0.3),rgba(255,255,255,0.12))]"
               >
                 Why Primework?
               </Link>
@@ -210,7 +210,7 @@ export function Header() {
               <X className="size-4" />
             </button>
 
-            <nav className="grid gap-1.5 pt-10">
+            <nav className="grid gap-1.5 pt-14">
               <Link
                 href="/about"
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -219,9 +219,9 @@ export function Header() {
                 About
               </Link>
               <Link
-                href="/services"
+                href="/why-primework"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="rounded-xl px-3 py-2.5 text-[1.6rem] leading-[1.05] text-[var(--off-white)]/92 transition-colors hover:bg-white/8 hover:text-[var(--off-white)]"
+                className="rounded-xl border border-white/26 bg-[linear-gradient(180deg,rgba(255,255,255,0.22),rgba(255,255,255,0.08))] px-3 py-2.5 text-[1.6rem] leading-[1.05] text-[var(--off-white)] shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] backdrop-blur-md transition-colors hover:bg-[linear-gradient(180deg,rgba(255,255,255,0.28),rgba(255,255,255,0.12))]"
               >
                 Why Primework?
               </Link>
@@ -250,10 +250,39 @@ export function Header() {
 
             <div className="mt-4 h-px w-full bg-white/12" />
 
+            <div className="mt-4">
+              <p className="px-2 text-xs uppercase tracking-[0.12em] text-[var(--off-white)]/58">
+                Language
+              </p>
+              <div className="mt-2 grid grid-cols-2 gap-2">
+                {LANGUAGES.map((language) => (
+                  <button
+                    key={language.code}
+                    type="button"
+                    onClick={() => setSelectedLang(language.code)}
+                    className={`inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm transition-colors ${
+                      selectedLang === language.code
+                        ? "border-white/24 bg-white/14 text-[var(--off-white)]"
+                        : "border-white/10 bg-black/16 text-[var(--off-white)]/82 hover:bg-white/8"
+                    }`}
+                  >
+                    <Image
+                      src={language.flag}
+                      alt={language.label}
+                      width={18}
+                      height={14}
+                      className="h-[14px] w-[18px] rounded-[2px] object-cover"
+                    />
+                    <span>{language.label}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <Link
               href="/contact"
               onClick={() => setIsMobileMenuOpen(false)}
-              className="mt-5 inline-flex w-full items-center justify-center rounded-2xl bg-[var(--highlight)] px-5 py-3 text-lg font-medium text-[var(--off-black)] transition-colors hover:bg-[var(--highlight-0)]"
+              className="mt-7 inline-flex w-full items-center justify-center rounded-2xl bg-[var(--highlight)] px-5 py-3 text-lg font-medium text-[var(--off-black)] transition-colors hover:bg-[var(--highlight-0)]"
             >
               Contact Us
             </Link>

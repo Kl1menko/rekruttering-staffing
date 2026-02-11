@@ -1,10 +1,11 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Instagram, Linkedin, Mail, MoreHorizontal, Play } from "lucide-react";
+import { MoreHorizontal, Play } from "lucide-react";
 
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
 import { FadeIn } from "@/components/motion/FadeIn";
+import { SlideIn } from "@/components/motion/SlideIn";
 import { SlideUp } from "@/components/motion/SlideUp";
 import { Button } from "@/components/ui/button";
 
@@ -60,154 +61,58 @@ export function Hero() {
         </div>
 
         <div className="pointer-events-none absolute inset-0 hidden md:block">
-          <div className="absolute left-[-1%] top-[2%] w-[336px] rotate-[-3deg] rounded-3xl border border-black/8 bg-white/92 p-4 shadow-[0_18px_45px_-24px_rgba(0,0,0,0.42)] backdrop-blur-sm">
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <Image
-                  src="/avatars/anna.jpg"
-                  alt="Anna Kowalski"
-                  width={44}
-                  height={44}
-                  className="size-11 rounded-full object-cover"
-                />
-                <div>
-                  <p className="text-[1.55rem] font-semibold leading-none text-foreground">
-                    Anna Kowalski
-                  </p>
-                  <p className="mt-1 text-sm text-muted-foreground">Senior Recruiter</p>
+          <SlideIn
+            direction="left"
+            delay={0.12}
+            className="absolute left-[-3%] top-[-1%]"
+          >
+            <div className="w-[304px] rotate-[-3deg] rounded-3xl border border-black/8 bg-white/92 p-3.5 shadow-[0_18px_45px_-24px_rgba(0,0,0,0.42)] backdrop-blur-sm">
+              <div className="flex items-start justify-between gap-3">
+                <div className="flex items-center gap-3">
+                  <Image
+                    src="/avatars/anna.jpg"
+                    alt="Anna Kowalski"
+                    width={40}
+                    height={40}
+                    className="size-10 rounded-full object-cover"
+                  />
+                  <div>
+                    <p className="text-[1.35rem] font-semibold leading-none text-foreground">
+                      Anna Kowalski
+                    </p>
+                    <p className="mt-1 text-[0.92rem] text-muted-foreground">Senior Recruiter</p>
+                  </div>
                 </div>
-              </div>
-              <MoreHorizontal className="mt-1 size-5 text-foreground/75" />
-            </div>
-            <div className="mt-4 border-t border-black/8 pt-3">
-              <div className="flex items-center justify-between">
-                <p className="text-sm text-muted-foreground">Start May 12, 2025</p>
-                <div className="flex items-center gap-2">
-                  <span className="inline-flex size-7 items-center justify-center rounded-full bg-white shadow-[0_1px_2px_rgba(0,0,0,0.12)]">
-                    <Mail className="size-4 text-[#d74b3e]" />
-                  </span>
-                  <span className="inline-flex size-7 items-center justify-center rounded-full bg-[#0a66c2] shadow-[0_1px_2px_rgba(0,0,0,0.12)]">
-                    <Linkedin className="size-4 text-white" />
-                  </span>
-                  <span className="inline-flex size-7 items-center justify-center rounded-full bg-[radial-gradient(circle_at_30%_100%,#feda75_0%,#fa7e1e_35%,#d62976_65%,#962fbf_85%,#4f5bd5_100%)] shadow-[0_1px_2px_rgba(0,0,0,0.12)]">
-                    <Instagram className="size-4 text-white" />
-                  </span>
-                </div>
+                <MoreHorizontal className="mt-1 size-4.5 text-foreground/75" />
               </div>
             </div>
-          </div>
+          </SlideIn>
 
-          <div className="absolute right-[-1%] top-[4%] w-[336px] rotate-[4deg] rounded-3xl border border-black/8 bg-white/92 p-4 shadow-[0_18px_45px_-24px_rgba(0,0,0,0.42)] backdrop-blur-sm">
-            <div className="flex items-start justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <Image
-                  src="/avatars/marcus.jpg"
-                  alt="Marcus Alexandro"
-                  width={44}
-                  height={44}
-                  className="size-11 rounded-full object-cover"
-                />
-                <div>
-                  <p className="text-[1.55rem] font-semibold leading-none text-foreground">
-                    Marcus Alexandro
-                  </p>
-                  <p className="mt-1 text-sm text-muted-foreground">Operations Manager</p>
-                </div>
+          <SlideIn
+            direction="right"
+            delay={0.18}
+            className="absolute right-[1%] top-[33%]"
+          >
+            <div className="w-[252px] rotate-[4deg] rounded-[22px] border border-[#2a7f73]/55 bg-[linear-gradient(to_bottom,rgba(11,110,100,0.72),rgba(10,84,76,0.66))] p-3 text-[#fdfbee] shadow-[0_24px_52px_-30px_rgba(0,0,0,0.62)] backdrop-blur-md">
+              <p className="text-[0.72rem] uppercase tracking-[0.12em] text-[#d9f6d4]/72">
+                Staffing Scope
+              </p>
+              <p className="mt-1.5 text-[1.45rem] font-semibold leading-[1.03]">
+                Warehouse Shift
+                <br />
+                Team Setup
+              </p>
+              <p className="mt-2 text-[0.8rem] leading-[1.22] text-[#e4f4e2]/74">
+                Sourcing, screening, onboarding, and compliance control for
+                pickers, packers, and forklift operators with weekly KPI reporting.
+              </p>
+              <div className="mt-2.5 inline-flex rounded-full bg-[#7ae043]/14 px-2.5 py-1 text-[0.68rem] font-medium text-[#d5f9b7]">
+                24 starts in 10 days
               </div>
-              <MoreHorizontal className="mt-1 size-5 text-foreground/75" />
+              <p className="mt-3 text-[1.05rem] font-semibold">SLA + Compliance Included</p>
             </div>
-            <div className="mt-4 border-t border-black/8 pt-3">
-              <div className="flex items-center justify-between">
-                <p className="text-sm text-muted-foreground">Start May 12, 2025</p>
-                <div className="flex items-center gap-2">
-                  <span className="inline-flex size-7 items-center justify-center rounded-full bg-white shadow-[0_1px_2px_rgba(0,0,0,0.12)]">
-                    <Mail className="size-4 text-[#d74b3e]" />
-                  </span>
-                  <span className="inline-flex size-7 items-center justify-center rounded-full bg-[#0a66c2] shadow-[0_1px_2px_rgba(0,0,0,0.12)]">
-                    <Linkedin className="size-4 text-white" />
-                  </span>
-                  <span className="inline-flex size-7 items-center justify-center rounded-full bg-[radial-gradient(circle_at_30%_100%,#feda75_0%,#fa7e1e_35%,#d62976_65%,#962fbf_85%,#4f5bd5_100%)] shadow-[0_1px_2px_rgba(0,0,0,0.12)]">
-                    <Instagram className="size-4 text-white" />
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
+          </SlideIn>
 
-          <div className="absolute left-[34%] top-[26%] w-[360px] rotate-[5deg] rounded-[30px] border border-[#2a7f73] bg-gradient-to-b from-[#0b6e64] to-[#0a544c] p-5 text-[#fdfbee] shadow-[0_28px_60px_-28px_rgba(0,0,0,0.7)]">
-            <p className="text-xs uppercase tracking-[0.12em] text-[#d9f6d4]/80">Enterprise Brief</p>
-            <p className="mt-2 text-[1.85rem] font-semibold leading-[1.04]">
-              Volume Hiring
-              <br />
-              Program Lead
-            </p>
-            <p className="mt-3 text-[0.95rem] leading-[1.25] text-[#e4f4e2]/78">
-              End-to-end launch for warehousing and manufacturing roles with SLA,
-              onboarding and weekly workforce reporting.
-            </p>
-            <div className="mt-4 inline-flex rounded-full bg-[#7ae043]/18 px-3 py-1 text-xs font-medium text-[#d5f9b7]">
-              40 starts in 14 days
-            </div>
-            <p className="mt-4 text-[1.45rem] font-semibold">$6,500 / Month</p>
-          </div>
-
-          <div className="absolute bottom-[16%] left-[3%] w-[320px] rounded-full border border-black/10 bg-[#111111] px-5 py-3 text-[#fdfbee] shadow-[0_18px_45px_-24px_rgba(0,0,0,0.52)]">
-            <svg
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-              className="absolute -right-5 -top-8 size-8 rotate-[318deg] drop-shadow-[0_5px_8px_rgba(0,0,0,0.32)]"
-            >
-              <path
-                d="M2.4 2.2L21.5 9.8 12 12.1 9.7 21.6 2.4 2.2z"
-                fill="#111111"
-                stroke="rgba(253,251,238,0.42)"
-                strokeWidth="1.2"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <div className="flex items-center gap-3">
-              <Image
-                src="/avatars/vince.jpg"
-                alt="Vince Marconzo"
-                width={44}
-                height={44}
-                className="size-11 rounded-full object-cover"
-              />
-              <div className="text-left">
-                <p className="text-[1.45rem] font-semibold leading-none">Vince Marconzo</p>
-                <p className="mt-1 text-sm text-[#fdfbee]/70">Human Resources</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="absolute bottom-[12%] right-[2%] w-[338px] rounded-full border border-black/10 bg-[#0a7a73] px-5 py-3 text-[#fdfbee] shadow-[0_18px_45px_-24px_rgba(0,0,0,0.52)]">
-            <svg
-              viewBox="0 0 24 24"
-              aria-hidden="true"
-              className="absolute -left-5 -top-8 size-8 rotate-[-16deg] drop-shadow-[0_5px_8px_rgba(0,0,0,0.26)]"
-            >
-              <path
-                d="M2.4 2.2L21.5 9.8 12 12.1 9.7 21.6 2.4 2.2z"
-                fill="#0a7a73"
-                stroke="rgba(226,252,245,0.6)"
-                strokeWidth="1.2"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <div className="flex items-center gap-3">
-              <Image
-                src="/avatars/robert.jpg"
-                alt="Robert Williamson"
-                width={44}
-                height={44}
-                className="size-11 rounded-full object-cover"
-              />
-              <div className="text-left">
-                <p className="text-[1.45rem] font-semibold leading-none">Robert Williamson</p>
-                <p className="mt-1 text-sm text-[#fdfbee]/74">Head of HRD</p>
-              </div>
-            </div>
-          </div>
         </div>
       </Container>
     </Section>
