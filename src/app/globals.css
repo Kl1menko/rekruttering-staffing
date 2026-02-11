@@ -49,25 +49,43 @@
 }
 
 :root {
+  --off-white: #fdfbee;
+  --off-black: #110000;
+  --sand: #f3f0d6;
+  --dark-green: #153f15;
+  --green: #066742;
+  --ui: rgba(0, 0, 0, 0.1);
+  --ui-hovered: rgba(0, 0, 0, 0.08);
+  --highlight: #f4ffae;
+  --highlight-0: #f0ff91;
+  --highlight-1: #b7d96e;
+  --highlight-2: #8eb258;
+  --highlight-3: #7a994c;
+  --red1: #920000;
+  --red2: #b50000;
+  --red3: #d50000;
+  --red4: #ff0101;
+  --black: #000;
+  --white: #fff;
   --radius: 0.625rem;
-  --background: oklch(0.97 0.008 82);
-  --foreground: oklch(0.24 0.015 70);
-  --card: oklch(0.985 0.006 82);
-  --card-foreground: oklch(0.24 0.015 70);
-  --popover: oklch(0.99 0.004 82);
-  --popover-foreground: oklch(0.24 0.015 70);
-  --primary: oklch(0.36 0.08 156);
-  --primary-foreground: oklch(0.97 0.006 82);
-  --secondary: oklch(0.935 0.008 82);
-  --secondary-foreground: oklch(0.27 0.014 70);
-  --muted: oklch(0.945 0.007 82);
-  --muted-foreground: oklch(0.5 0.01 74);
-  --accent: oklch(0.93 0.014 154);
-  --accent-foreground: oklch(0.27 0.03 150);
+  --background: var(--off-white);
+  --foreground: var(--off-black);
+  --card: var(--sand);
+  --card-foreground: var(--off-black);
+  --popover: var(--off-white);
+  --popover-foreground: var(--off-black);
+  --primary: var(--highlight);
+  --primary-foreground: var(--off-black);
+  --secondary: var(--sand);
+  --secondary-foreground: var(--off-black);
+  --muted: var(--sand);
+  --muted-foreground: #4d4141;
+  --accent: var(--highlight-0);
+  --accent-foreground: var(--off-black);
   --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.86 0.008 80);
-  --input: oklch(0.9 0.008 80);
-  --ring: oklch(0.5 0.06 156);
+  --border: color-mix(in srgb, var(--off-black) 14%, transparent);
+  --input: color-mix(in srgb, var(--off-black) 12%, transparent);
+  --ring: color-mix(in srgb, var(--off-black) 30%, transparent);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -138,24 +156,24 @@
     font-family: var(--font-sans), var(--font-fallback-sans), sans-serif;
   }
   body {
-    font-size: clamp(1rem, 0.98rem + 0.35vw, 1.125rem);
-    line-height: 1.7;
+    font-size: clamp(1rem, 0.9rem + 0.55vw, 1.3125rem);
+    line-height: 1.28;
     @apply bg-background text-foreground;
   }
   h1 {
-    font-size: clamp(3rem, 5vw, 4rem);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
+    font-size: clamp(3.5rem, 11vw, 10.625rem);
+    line-height: 0.86;
+    letter-spacing: 0;
   }
   h2 {
-    font-size: clamp(2rem, 3.7vw, 2.5rem);
-    line-height: 1.12;
-    letter-spacing: -0.015em;
+    font-size: clamp(2.25rem, 8vw, 6rem);
+    line-height: 0.92;
+    letter-spacing: 0;
   }
   h3 {
-    font-size: clamp(1.25rem, 2.15vw, 1.5rem);
-    line-height: 1.28;
-    letter-spacing: -0.01em;
+    font-size: clamp(1.5rem, 4.5vw, 3rem);
+    line-height: 1;
+    letter-spacing: 0;
   }
 }
 

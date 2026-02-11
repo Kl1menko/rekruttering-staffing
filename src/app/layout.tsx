@@ -69,9 +69,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
+      suppressHydrationWarning
       className={`${sans.variable} ${groteskSans.variable} ${display.variable}`}
     >
-      <body className="font-sans antialiased">
+      <body suppressHydrationWarning className="font-sans antialiased">
         {children}
       </body>
     </html>

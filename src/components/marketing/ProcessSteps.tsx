@@ -1,30 +1,34 @@
+import Link from "next/link";
+import { Check } from "lucide-react";
+
 import { Container } from "@/components/layout/Container";
 import { Section } from "@/components/layout/Section";
+import { Button } from "@/components/ui/button";
 
 const steps = [
   {
     title: "Capture the brief",
-    description: "We define roles, headcount, schedules, locations, SLA, and KPI targets.",
+    description: "Role scope and hiring targets approved",
   },
   {
     title: "Align the model",
-    description: "We align cooperation model, legal setup, and commercial terms.",
+    description: "Legal model and SLA confirmed",
   },
   {
     title: "Launch sourcing",
-    description: "We activate local acquisition channels and build a focused shortlist.",
+    description: "Shortlist pipeline goes live",
   },
   {
     title: "Run selection",
-    description: "Screening, document checks, and motivation validation for candidates.",
+    description: "Screening and document checks",
   },
   {
     title: "Deploy to shifts",
-    description: "Onboarding, safety induction, shift allocation, and first-week control.",
+    description: "Onboarding and shift allocation",
   },
   {
     title: "Report transparently",
-    description: "Weekly reporting on attendance, attrition, quality, and fill-rate dynamics.",
+    description: "Weekly KPI and quality reporting",
   },
 ];
 
@@ -32,23 +36,79 @@ export function ProcessSteps() {
   return (
     <Section id="process" className="border-t border-border/60">
       <Container>
-        <div className="max-w-3xl">
-          <p className="text-sm uppercase tracking-[0.12em] text-muted-foreground">Process</p>
-          <h2 className="mt-4">6 steps from initial request to full shift readiness.</h2>
+        <div className="relative overflow-hidden rounded-[1.7rem] border border-black/10 bg-[color:color-mix(in_srgb,var(--off-white)_86%,var(--sand)_14%)] p-5 sm:rounded-[2rem] sm:p-7 md:p-10">
+          <div className="pointer-events-none absolute inset-0 bg-[linear-gradient(to_right,rgba(17,0,0,0.06)_1px,transparent_1px),linear-gradient(to_bottom,rgba(17,0,0,0.06)_1px,transparent_1px)] bg-[size:2.8rem_2.8rem] opacity-30" />
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 h-2/3 bg-[radial-gradient(ellipse_at_center,rgba(206,243,187,0.5)_0%,rgba(206,243,187,0)_72%)]" />
+
+          <div className="relative z-10 grid gap-7 lg:grid-cols-2 lg:items-center lg:gap-10">
+            <div className="max-w-xl">
+              <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground sm:text-sm">Process</p>
+              <h2 className="mt-3 text-[2.1rem] leading-[0.95] sm:text-[2.6rem] md:text-[3.3rem]">
+                Simplify Your Recruitment
+                <br />
+                And <span className="text-foreground/42">Maximize Results</span>
+              </h2>
+              <p className="mt-4 max-w-[34rem] text-sm leading-relaxed text-foreground/58 sm:text-base">
+                Streamline your hiring workflow with clear stage ownership, documented compliance,
+                and predictable staffing outcomes.
+              </p>
+              <Button
+                asChild
+                className="mt-6 h-12 rounded-2xl bg-[#76df42] px-7 text-base font-semibold text-[#132300] hover:bg-[#6ed23d]"
+              >
+                <Link href="#contact">Get Started</Link>
+              </Button>
+            </div>
+
+            <div className="rounded-[1.35rem] border border-black/8 bg-white/80 p-2.5 shadow-[0_16px_34px_-26px_rgba(0,0,0,0.35)] backdrop-blur-sm sm:rounded-[1.7rem] sm:p-4">
+              <div className="space-y-2.5">
+                {steps.map((step, index) => {
+                  const active = index === 1;
+                  return (
+                    <article
+                      key={step.title}
+                      className={[
+                        "flex items-center gap-2.5 rounded-xl border px-2.5 py-2.5 transition-transform duration-200 sm:gap-3 sm:rounded-[1.2rem] sm:px-3.5 sm:py-3",
+                        active
+                          ? "border-[#0b7c72] bg-[#046e68] text-[#eafff4]"
+                          : "border-black/10 bg-white text-foreground",
+                        index === 0 ? "sm:rotate-[1.2deg]" : "",
+                        index === 2 ? "sm:-rotate-[1.1deg]" : "",
+                      ].join(" ")}
+                    >
+                      <span
+                        className={[
+                          "inline-flex size-9 shrink-0 items-center justify-center rounded-full border sm:size-11",
+                          active
+                            ? "border-[#8ad3c8] bg-[#0f8076] text-[#dffbf5]"
+                            : "border-[#a8d6a0] bg-[#e8f6dc] text-[#19633c]",
+                        ].join(" ")}
+                        aria-hidden="true"
+                      >
+                        <Check className="size-4 sm:size-5" strokeWidth={2.5} />
+                      </span>
+                      <div className="min-w-0">
+                        <p className="truncate text-[0.96rem] font-semibold leading-none sm:text-[1.25rem]">
+                          {step.title}
+                        </p>
+                        <p
+                          className={[
+                            "mt-1 truncate text-xs sm:text-sm",
+                            active ? "text-[#c8eee8]" : "text-foreground/52",
+                          ].join(" ")}
+                        >
+                          Step {index + 1}: {step.description}
+                        </p>
+                      </div>
+                      <span className="ml-auto text-xl leading-none tracking-tight">•••</span>
+                    </article>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
         </div>
-        <ol className="mt-10 grid gap-4 md:grid-cols-2">
-          {steps.map((step, index) => (
-            <li key={step.title} className="rounded-xl border border-border/75 bg-card/60 p-5">
-              <p className="text-xs uppercase tracking-[0.12em] text-muted-foreground">
-                Step {index + 1}
-              </p>
-              <h3 className="mt-3">{step.title}</h3>
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                {step.description}
-              </p>
-            </li>
-          ))}
-        </ol>
+
       </Container>
     </Section>
   );
