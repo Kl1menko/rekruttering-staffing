@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 
 export function Hero() {
   return (
-    <Section className="relative overflow-hidden border-b border-border/60 bg-background pb-20 pt-22 md:pb-28 md:pt-28">
+    <Section className="relative overflow-hidden border-b border-border/60 bg-background pb-20 pt-14 sm:pt-18 md:pb-28 md:pt-28">
       <div className="pointer-events-none absolute inset-x-0 top-0 h-[90%] overflow-hidden">
         <div className="absolute left-1/2 top-[2%] h-[74%] w-[min(1320px,90%)] -translate-x-1/2 [background-size:56px_56px] [background-image:linear-gradient(to_right,var(--border)_1px,transparent_1px),linear-gradient(to_bottom,var(--border)_1px,transparent_1px)] opacity-80 [mask-image:radial-gradient(130%_102%_at_50%_36%,#000_56%,rgba(0,0,0,0)_100%)]" />
       </div>
